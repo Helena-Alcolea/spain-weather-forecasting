@@ -54,7 +54,7 @@ target variables and forecast horizons.
 | | |
 |---|---|
 | **Agency** | AEMET — Agencia Estatal de Meteorología |
-| **Network** | SYNOP (~300 stations across Spain) |
+| **Network** | SYNOP (~98 stations across Spain) |
 | **API** | AEMET OpenData API |
 | **Target variables** | Daily maximum temperature · Daily minimum temperature · Daily precipitation |
 | **Feature variables** | Lagged tmax, tmin, prec · Atmospheric pressure · Relative humidity · Solar radiation · Wind speed · Altitude · Coordinates |
