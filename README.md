@@ -59,7 +59,7 @@ target variables and forecast horizons.
 | **Target variables** | Daily maximum temperature · Daily minimum temperature · Daily precipitation |
 | **Feature variables** | Lagged tmax, tmin, prec · Atmospheric pressure · Relative humidity · Solar radiation · Wind speed · Altitude · Coordinates |
 | **Coverage** | 1991–present (stations with continuous records) |
-| **Volume** | 3M+ daily records |
+| **Volume** | 1M+ daily records |
 
 ---
 
