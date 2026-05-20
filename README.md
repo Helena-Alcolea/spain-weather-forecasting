@@ -41,7 +41,7 @@ continuous records since 1991 and less than 10% missing data, following
 WMO quality standards. Spatial and temporal characterisation of temperature 
 and precipitation across Spain's SYNOP network.
 
-**Phase 2 — ML Baseline** 
+**Phase 2 — ML Baseline** <br>
 Training and evaluation of XGBoost, LightGBM and Random Forest regressors 
 for 1, 3 and 7-day forecast horizons. Evaluation metrics: RMSE, MAE and R². 
 Feature importance analysis to identify the most relevant predictors at 
