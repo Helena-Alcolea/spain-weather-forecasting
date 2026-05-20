@@ -1,10 +1,8 @@
 # AEMET Weather Forecasting
 
-Multi-horizon regression models for predicting extreme temperature and 
-precipitation events using historical SYNOP station data from AEMET 
-(Spain's State Meteorological Agency).
+Multi-horizon forecasting of daily maximum temperature, minimum temperature and precipitation using historical SYNOP station data from AEMET (Spain's State Meteorological Agency).
 
-**Status:** In progress — Data pipeline and EDA complete. ML and DL models upcoming.
+**Status:** In progress — Data pipeline, EDA and ML complete. DL models upcoming.
 
 ---
 
@@ -42,10 +40,7 @@ WMO quality standards. Spatial and temporal characterisation of temperature
 and precipitation across Spain's SYNOP network.
 
 **Phase 2 — ML Baseline** <br>
-Training and evaluation of XGBoost, LightGBM and Random Forest regressors 
-for 1, 3 and 7-day forecast horizons. Evaluation metrics: RMSE, MAE and R². 
-Feature importance analysis to identify the most relevant predictors at 
-each horizon.
+Training and evaluation of XGBoost and LightGBM regressors for 1, 3 and 7-day forecast horizons. Random Forest was evaluated and discarded due to systematically higher MAE and training times 8–10× longer than gradient boosting models. Evaluation metrics: RMSE, MAE and R². LightGBM selected as final model based on consistent superiority at t+1 across all four prototype stations and 2–3× faster training time compared to XGBoost.
 
 **Phase 3 — DL Sequence Models** *(upcoming)*  
 Development of LSTM, GRU and CNN architectures for sequence-based 
@@ -70,8 +65,7 @@ target variables and forecast horizons.
 
 ## Data Pipeline
 
-A production-grade pipeline was built to extract and validate historical 
-records from the AEMET API prior to modelling:
+A robust extraction pipeline was built to extract and validate historical records from the AEMET API prior to modelling:
 
 - Incremental extraction per station with adaptive retry logic and rate 
   limit management
