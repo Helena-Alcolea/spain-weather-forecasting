@@ -2,7 +2,7 @@
 
 Multi-horizon forecasting of daily maximum temperature, minimum temperature and precipitation using historical SYNOP station data from AEMET (Spain's State Meteorological Agency).
 
-**Status:** In progress — Data pipeline, EDA and ML complete. DL models upcoming.
+**Status:** In progress — Data pipeline, EDA and ML baseline complete. DL models upcoming.
 
 ---
 
@@ -40,12 +40,10 @@ WMO quality standards. Spatial and temporal characterisation of temperature
 and precipitation across Spain's SYNOP network.
 
 **Phase 2 — ML Baseline** <br>
-Training and evaluation of XGBoost and LightGBM regressors for 1, 3 and 7-day forecast horizons. Random Forest was evaluated and discarded due to systematically higher MAE and training times 8–10× longer than gradient boosting models. Evaluation metrics: RMSE, MAE and R². LightGBM selected as final model based on consistent superiority at t+1 across all four prototype stations and 2–3× faster training time compared to XGBoost.
+Training and evaluation of XGBoost and LightGBM regressors for 1, 3 and 7-day forecast horizons. Random Forest was evaluated and discarded due to systematically higher MAE and training times 8–10× longer than gradient boosting models. Evaluation metrics: RMSE, MAE and R². LightGBM and XGBoost produced comparable results across all prototype stations and horizons; LightGBM was selected as the final ML baseline based on consistent superiority at t+1 and greater stability across stations. A single model is retained as baseline to provide a clean reference point for DL comparison.
 
-**Phase 3 — DL Sequence Models** *(upcoming)*  
-Development of LSTM, GRU and CNN architectures for sequence-based 
-forecasting. Systematic comparison against ML baselines across all 
-target variables and forecast horizons.
+**Phase 3 — DL Sequence Models** *(in progress)*  
+Development of a LSTM architecture with station embedding for multi-horizon sequence forecasting. The model predicts all seven daily horizons (t+1 to t+7) simultaneously for maximum temperature, minimum temperature and precipitation across 95 stations. Direct comparison against ML baselines is available at t+1, t+3 and t+7; intermediate horizons are reported as DL-only results..
 
 ---
 
