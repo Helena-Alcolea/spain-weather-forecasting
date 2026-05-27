@@ -46,7 +46,7 @@ Development of a LSTM architecture with station embedding for multi-horizon sequ
 | | |
 |---|---|
 | **Agency** | AEMET — Agencia Estatal de Meteorología |
-| **Network** | SYNOP (~98 stations across Spain) |
+| **Network** | SYNOP (~270 stations across Spain) |
 | **API** | AEMET OpenData API |
 | **Target variables** | Daily maximum temperature · Daily minimum temperature · Daily precipitation |
 | **Feature variables** | Lagged tmax, tmin, prec · Atmospheric pressure · Relative humidity · Solar radiation · Wind speed · Altitude · Coordinates |
