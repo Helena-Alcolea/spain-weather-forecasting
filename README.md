@@ -10,7 +10,7 @@ Multi-horizon forecasting of daily maximum temperature, minimum temperature and 
 
 This project builds and evaluates ML/DL models to **forecast daily maximum temperature, minimum temperature and precipitation at 1 to 7-day horizons** across Spain's SYNOP meteorological network.
 
-The forecasting task is framed as a multivariate regression problem over meteorological time series. Classical ML approaches (LightGBM) are evaluated at t+1, t+3 and t+7 as reference baselines. The deep learning phase develops a Bidirectional LSTM architecture with station embedding that predicts all seven daily horizons simultaneously across 98 stations.
+The forecasting task is framed as a multivariate regression problem over meteorological time series. Classical ML approaches (LightGBM) are evaluated at t+1, t+3 and t+7 as reference baselines. The deep learning phase develops a Bidirectional LSTM architecture with station embedding that predicts all seven daily horizons simultaneously across the SYNOP station network.
 
 ## EDA Highlights
 
@@ -37,7 +37,7 @@ and precipitation across Spain's SYNOP network.
 Training and evaluation of XGBoost and LightGBM regressors for 1, 3 and 7-day forecast horizons. Random Forest was evaluated and discarded due to systematically higher MAE and training times 8–10× longer than gradient boosting models. Evaluation metrics: RMSE, MAE and R². LightGBM and XGBoost produced comparable results across all prototype stations and horizons; LightGBM was selected as the final ML baseline based on consistent superiority at t+1 and greater stability across stations. A single model is retained as baseline to provide a clean reference point for DL comparison.
 
 **Phase 3 — DL Sequence Models** *(in progress)*  
-Development of a LSTM architecture with station embedding for multi-horizon sequence forecasting. The model predicts all seven daily horizons (t+1 to t+7) simultaneously for maximum temperature, minimum temperature and precipitation across 98 stations. Direct comparison against ML baselines is available at t+1, t+3 and t+7; intermediate horizons are reported as DL-only results..
+Development of a LSTM architecture with station embedding for multi-horizon sequence forecasting. The model predicts all seven daily horizons (t+1 to t+7) simultaneously for maximum temperature, minimum temperature and precipitation. The training set is determined by data availability, recent gap tolerance and valid observations in recent months, and varies with model configuration.
 
 ---
 
@@ -51,7 +51,7 @@ Development of a LSTM architecture with station embedding for multi-horizon sequ
 | **Target variables** | Daily maximum temperature · Daily minimum temperature · Daily precipitation |
 | **Feature variables** | Lagged tmax, tmin, prec · Atmospheric pressure · Relative humidity · Solar radiation · Wind speed · Altitude · Coordinates |
 | **Coverage** | 1991–present (stations with continuous records) |
-| **Volume** | 1M+ daily records |
+| **Volume** | 3.5M+ daily records (full database); 1.25M filtered records (stations meeting WMO quality criteria, 1991–present) |
 
 ---
 
