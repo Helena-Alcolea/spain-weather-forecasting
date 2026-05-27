@@ -10,7 +10,7 @@ Multi-horizon forecasting of daily maximum temperature, minimum temperature and 
 
 This project builds and evaluates ML/DL models to **forecast daily maximum temperature, minimum temperature and precipitation at 1 to 7-day horizons** across Spain's SYNOP meteorological network.
 
-The forecasting task is framed as a multivariate regression problem over meteorological time series. Classical ML approaches (LightGBM) are evaluated at t+1, t+3 and t+7 as reference baselines. The deep learning phase develops a Bidirectional LSTM architecture with station embedding that predicts all seven daily horizons simultaneously across the SYNOP station network.
+The forecasting task is framed as a multivariate regression problem over meteorological time series. Classical ML approaches (LightGBM and XGBoost) are evaluated at t+1, t+3 and t+7 as reference baselines. The deep learning phase develops a LSTM architecture with station embedding that predicts all seven daily horizons simultaneously across the SYNOP station network.
 
 ## EDA Highlights
 
