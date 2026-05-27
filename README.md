@@ -72,14 +72,27 @@ Pipeline code available in `data_ingestion/` and `data_audit/`.
 
 ## Station Selection Criteria
 
-Stations are included if they meet all of the following:
+The analysis is restricted to stations belonging to Spain's SYNOP
+network — those with an assigned SYNOP identifier that report to the
+WMO global observation network. AEMET operates a larger network of
+additional stations outside this scheme; these were not considered.
 
-- Continuous records since **1991**, covering the current AEMET 
+Within the SYNOP network, stations are included in the EDA and ML
+baseline analysis if they meet all of the following quality criteria:
+
+- Continuous records since **1991**, covering the current AEMET
   climatological reference period (1991–2020)
 - Minimum record span of **30 years** (WMO standard)
-- **Less than 10% missing data** over the full record span, following 
-  the completeness threshold used by the WMO for centennial station 
-  recognition
+- **Less than 10% missing data** over the full record span (row
+  coverage), following the completeness threshold used by the WMO
+  for centennial station recognition
+
+98 stations meet these criteria across 51 of Spain's 52 provinces.
+
+The training set for the deep learning phase is determined separately,
+based on feature availability, recent gap tolerance and valid
+observations in recent months. It does not necessarily coincide with
+the 98-station EDA subset.
 
 ---
 
