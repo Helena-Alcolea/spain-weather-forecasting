@@ -50,7 +50,7 @@ Development of a LSTM architecture with station embedding for multi-horizon sequ
 | **API** | AEMET OpenData API |
 | **Target variables** | Daily maximum temperature · Daily minimum temperature · Daily precipitation |
 | **Feature variables** | Lagged tmax, tmin, prec · Atmospheric pressure · Relative humidity · Solar radiation · Wind speed · Altitude · Coordinates |
-| **Coverage** | 1991–present (stations with continuous records) |
+| **Coverage** | 1920-present (full database); 1991-present (stations meeting WMO quality criteria, used in EDA and ML baseline) |
 | **Volume** | 3.5M+ daily records (full database); 1.25M filtered records (stations meeting WMO quality criteria, 1991–present) |
 
 ---
