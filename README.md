@@ -105,7 +105,7 @@ A robust extraction pipeline was built to extract and validate historical record
 - Historical backfill: automated recovery of missing records with multi-attempt verification
 - PostgreSQL database storing 3.5M+ validated daily records
 
-Pipeline code available in `data_ingestion/` and `data_audit/`.
+Pipeline code available in `data_pipeline/`.
 
 ---
 
@@ -140,4 +140,4 @@ The training set for the deep learning phase is determined separately, based on 
 
 ## Author
 
-Helena Alcolea Ruiz · Physicist (BSc + MSc in Complex Systems) · Data Scientist · [LinkedIn](#) · [GitHub](#)
+Helena Alcolea Ruiz · Physicist (BSc + MSc in Complex Systems) · Data Scientist · [LinkedIn](www.linkedin.com/in/helena-alcolea) · [GitHub](https://github.com/Helena-Alcolea)
