@@ -1,6 +1,9 @@
-# AEMET Weather Forecasting
+# Spain Weather Forecasting
 
 **A deep learning model that forecasts the next 7 days of temperature and rainfall for any weather station in Spain, using AEMET's open public data.**
+
+**🌦️ [Live dashboard](https://spain-weather-forecasting.streamlit.app)** — pick a station on the map and see its 7-day forecast.
+
 
 ---
 
