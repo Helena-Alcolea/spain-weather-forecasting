@@ -13,7 +13,7 @@ Spain's weather agency (AEMET) publishes daily records from hundreds of weather 
 
 A single model works for the **whole country**: it learns the "fingerprint" of each station's local climate, so the same network forecasts for Madrid, the coast or the mountains.
 
-**Why it matters:** short-range temperature and rain forecasts feed decisions in agriculture, energy, water management and climate-risk analysis — exactly the kind of problem climate-tech works on, here solved end to end with public data.
+**Why it matters:** temperature and rainfall forecasts feed real decisions — when to irrigate a crop, how much heating or cooling demand to expect on the grid, how to manage water reserves. Here that whole chain is built end to end at the level of individual stations, from open data and fully reproducible — the kind of data-driven service climate-tech delivers for the energy and agricultural sectors.
 
 ## Headline result
 
