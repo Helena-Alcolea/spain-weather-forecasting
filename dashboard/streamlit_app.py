@@ -41,6 +41,8 @@ TR = {
     "es": {
         "title": "🌦️ Previsión meteorológica a 7 días — España",
         "select": "Selecciona una estación (o pincha en el mapa)",
+        "stations_note": "ℹ️ Se muestran las estaciones de la red de AEMET, no todos los "
+                         "municipios de España. Elige la más cercana a tu ubicación.",
         "colorbar": "Tª media °C",
         "hover_mean": "Tª media",
         "forecast_for": "Previsión para",
@@ -61,6 +63,8 @@ TR = {
     "en": {
         "title": "🌦️ 7-day weather forecast — Spain",
         "select": "Choose a station (or click on the map)",
+        "stations_note": "ℹ️ Shows stations from AEMET's network, not every town in "
+                         "Spain. Pick the one closest to your location.",
         "colorbar": "Mean temp °C",
         "hover_mean": "Mean temp",
         "forecast_for": "Forecast for",
@@ -337,6 +341,7 @@ st.plotly_chart(
     map_figure(df_stations, selected_code, t), key="map",
     on_select="rerun", selection_mode="points",
 )
+st.caption(t["stations_note"])
 
 # --- Bloque 2: previsión a 7 días ------------------------------------------
 s = by_code[selected_code]
