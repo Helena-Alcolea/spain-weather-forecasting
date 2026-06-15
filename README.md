@@ -144,3 +144,6 @@ The training set for the deep learning phase is determined separately, based on 
 ## Author
 
 Helena Alcolea Ruiz · Physicist (BSc + MSc in Complex Systems) · Data Scientist · [LinkedIn](www.linkedin.com/in/helena-alcolea) · [GitHub](https://github.com/Helena-Alcolea)
+
+*Independent portfolio project using AEMET open data (source attributed); not affiliated with or endorsed by AEMET.*
+
