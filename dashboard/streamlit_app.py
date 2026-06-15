@@ -79,7 +79,7 @@ TR = {
     },
 }
 
-st.set_page_config(page_title="AEMET · 7-day forecast", page_icon="🌦️", layout="wide")
+st.set_page_config(page_title="Spain · 7-day weather forecast", page_icon="🌦️", layout="wide")
 
 
 def inject_style() -> None:
