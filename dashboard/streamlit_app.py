@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import math
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
@@ -274,10 +275,19 @@ def precip_figure(df: pd.DataFrame, t: dict) -> go.Figure:
     return _transparent(fig)
 
 
+def _alpha_key(text: str) -> str:
+    """Clave de orden alfabético español: ignora tildes (Á→a) y mayúsculas SOLO
+    para comparar, sin alterar el nombre que se muestra. Así 'Águilas' cae en la A."""
+    sin_tilde = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode("ascii")
+    return sin_tilde.casefold()
+
+
 # ---------------------------------------------------------------------------
 inject_style()
 payload = load_data()
-df_stations = stations_frame(payload).sort_values("nombre").reset_index(drop=True)
+df_stations = (stations_frame(payload)
+               .sort_values("nombre", key=lambda col: col.map(_alpha_key))
+               .reset_index(drop=True))
 by_code = {s["estacion"]: s for s in payload["estaciones"]}
 
 # Etiqueta del selector: nombre (+ provincia si el nombre se repite, para desambiguar).
@@ -287,7 +297,7 @@ label_by_code = {
     for r, d in zip(df_stations.itertuples(index=False), dup)
 }
 code_by_label = {v: k for k, v in label_by_code.items()}
-labels_sorted = sorted(code_by_label)
+labels_sorted = sorted(code_by_label, key=_alpha_key)
 
 # --- Selector de idioma (arriba a la derecha) ------------------------------
 _, lang_col = st.columns([5, 1])

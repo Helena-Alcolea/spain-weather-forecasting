@@ -1,40 +1,44 @@
-# Dashboard AEMET — previsión a 7 días
+# Weather Forecast Dashboard — Spain
 
-App [Streamlit](https://streamlit.io) que muestra las predicciones del modelo seq2seq
-(LSTM encoder-decoder + atención + embedding de estación) en un mapa de España con
-selector de estación y gráfico de la previsión a 7 días.
+A [Streamlit](https://streamlit.io) app that shows the seq2seq model's predictions
+(LSTM encoder–decoder + attention + per-station embedding) on a map of Spain, with a
+station selector and the 7-day forecast charts.
 
-Las predicciones van **precomputadas** en [`predictions.json`](predictions.json): la app
-solo lee ese fichero estático, así que **no necesita TensorFlow ni la base de datos** y el
-despliegue es ligero y gratuito.
+Predictions are **precomputed** in [`predictions.json`](predictions.json): the app only
+reads that static file, so it needs **neither TensorFlow nor the database** and the
+deployment is lightweight and free.
 
-## Ver en local
+## Run locally
 
 ```bash
-# entorno efímero, no toca el .venv del modelo
+# ephemeral environment, does not touch the model's .venv
 uv run --with streamlit --with plotly streamlit run dashboard/streamlit_app.py
 ```
 
-Abre http://localhost:8501.
+Open http://localhost:8501.
 
-## Publicar online (Streamlit Community Cloud — gratis, tipo Tableau Public)
+## Publish online (Streamlit Community Cloud — free, Tableau-Public style)
 
-1. Sube el repo a GitHub (con `dashboard/` dentro).
-2. Entra en https://share.streamlit.io con tu cuenta de GitHub.
-3. "New app" → elige el repo y rama, y en *Main file path* pon
+1. Push the repo to GitHub (with `dashboard/` inside).
+2. Sign in to https://share.streamlit.io with your GitHub account.
+3. "New app" → pick the repo and branch, and set *Main file path* to
    `dashboard/streamlit_app.py`.
-4. Streamlit instala las dependencias de [`requirements.txt`](requirements.txt) (solo
-   streamlit + pandas + plotly, sin TensorFlow) y publica la app en una URL pública
-   `https://<nombre>.streamlit.app`.
+4. Streamlit installs the dependencies from [`requirements.txt`](requirements.txt) (just
+   streamlit + pandas + plotly, no TensorFlow) and publishes the app at a public URL
+   `https://<name>.streamlit.app`.
 
-## Regenerar las predicciones
+## Regenerate the predictions
 
-Cuando se actualice la base de datos o el modelo, regenera el JSON desde la raíz del
-proyecto y cópialo aquí:
+When the database or the model is updated, regenerate the JSON from the project root and
+copy it here:
 
 ```bash
 uv run python generate_predictions.py --out dashboard/predictions.json
 ```
 
-> Las predicciones son del último snapshot, no en tiempo real. El pipeline puede
-> automatizarse con un cron diario que ejecute `update_db.py` + `generate_predictions.py`.
+> Predictions reflect the latest snapshot, not real time. The pipeline can be automated
+> with a daily cron job running `update_db.py` + `generate_predictions.py`.
+
+---
+
+*Data source: AEMET open data. Independent portfolio project; not affiliated with AEMET.*
