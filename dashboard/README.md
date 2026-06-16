@@ -15,7 +15,7 @@ deployment is lightweight and free.
 uv run --with streamlit --with plotly streamlit run dashboard/streamlit_app.py
 ```
 
-Open http://localhost:8501.
+Open http://localhost:  .
 
 ## Publish online (Streamlit Community Cloud — free, Tableau-Public style)
 
