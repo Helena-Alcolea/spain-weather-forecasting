@@ -217,7 +217,7 @@ def map_figure(df: pd.DataFrame, selected: str | None, t: dict) -> go.Figure:
     # igual por point_index si cae en el borde.
     fig.add_trace(go.Scattermap(
         lat=df["lat"], lon=df["lon"], mode="markers",
-        marker=dict(size=[s + 3 for s in sizes], color=BOX_BORDER),
+        marker=dict(size=[s + 2 for s in sizes], color=BOX_BORDER),
         hoverinfo="skip",
     ))
     fig.add_trace(go.Scattermap(
