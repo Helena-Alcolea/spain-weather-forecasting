@@ -209,10 +209,21 @@ def add_today_split(fig: go.Figure, fechas: pd.Series, t: dict, label_y: float =
 
 def map_figure(df: pd.DataFrame, selected: str | None, t: dict) -> go.Figure:
     """Mapa de estaciones coloreado por la temperatura media del primer día."""
-    fig = go.Figure(go.Scattermap(
+    sizes = [18 if e == selected else 10 for e in df["estacion"]]
+    fig = go.Figure()
+    # Borde fino: capa de marcadores algo mayores en color oscuro, DEBAJO de los de
+    # color, para que cada estación resalte sobre el mapa (Scattermap no admite
+    # marker.line). hoverinfo="skip" para no duplicar el tooltip; el clic se resuelve
+    # igual por point_index si cae en el borde.
+    fig.add_trace(go.Scattermap(
+        lat=df["lat"], lon=df["lon"], mode="markers",
+        marker=dict(size=[s + 3 for s in sizes], color=BOX_BORDER),
+        hoverinfo="skip",
+    ))
+    fig.add_trace(go.Scattermap(
         lat=df["lat"], lon=df["lon"], mode="markers",
         marker=dict(
-            size=[18 if e == selected else 10 for e in df["estacion"]],
+            size=sizes,
             color=df["tmedia_manana"],
             colorscale=[[0.0, SKY_BLUE], [0.5, CREAM], [1.0, TMAX_COLOR]],
             colorbar=dict(title=t["colorbar"]), opacity=0.92,
