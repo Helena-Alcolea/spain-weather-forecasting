@@ -28,6 +28,7 @@ The model is measured honestly against two reference methods anyone uses as a sa
 ## How it works (in brief)
 
 - **Input → output:** 30 days of weather in → 7 days of forecast out (t+1 … t+7), all at once.
+- **A note on dates**: AEMET publishes observations with a few days' lag, so each forecast is anchored to the most recent reliable data (~4 days back). The dashboard therefore shows the 7-day forecast as roughly 3 days that have already happened (a built-in reality check against the actual values) plus 4 genuinely future days. This lag is AEMET's publication schedule, not a limitation of the model. For the same reason, the exact set of stations shown can vary slightly from day to day: a station only appears when its recent 30-day window is complete and reliable — by design, the dashboard skips it rather than feed the model unconsolidated values.
 - **One global model** with a learned **station embedding** instead of one model per station.
 - **Architecture:** a **seq2seq encoder-decoder with attention** (an LSTM-based sequence model).
 - **Honest evaluation:** rolling-origin out-of-sample testing with **skill scores vs persistence and climatology** (a single test window can be misleading).
@@ -76,7 +77,7 @@ Exploratory analysis of the full dataset. Selection of stations with continuous 
 **Phase 2 — ML Baseline** <br>
 Training and evaluation of XGBoost and LightGBM regressors for 1, 3 and 7-day forecast horizons. Random Forest was evaluated and discarded due to systematically higher MAE and training times 8–10× longer than gradient boosting models. Evaluation metrics: RMSE, MAE and R². LightGBM and XGBoost produced comparable results across all prototype stations and horizons; LightGBM was selected as the final ML baseline based on consistent superiority at t+1 and greater stability across stations. A single model is retained as baseline to provide a clean reference point for DL comparison.
 
-**Phase 3 — DL Sequence Models** *(complete)*  
+**Phase 3 — DL Sequence Models** 
 A seq2seq (encoder-decoder with attention) architecture with station embedding predicts all seven daily horizons (t+1 to t+7) simultaneously for maximum temperature, minimum temperature and precipitation.
 
 The ML and DL approaches differ not just in architecture but in how they use data. The gradient-boosting models are **vertical**: one model per station, trained on 30 years of that station's history alone — no information is shared across the network. The seq2seq model is **horizontal**: a single global model trained across ~137 stations simultaneously, with a learned **station embedding** that captures each location's climate fingerprint (altitude, latitude, regional regime). This cross-station learning is what allows the DL model to work with 15 years of history instead of 30 — the network compensates with breadth. It also explains why the station selection criteria differ between the ML baseline (4 prototype stations, long records) and the DL phase (all stations with sufficient recent feature coverage).
