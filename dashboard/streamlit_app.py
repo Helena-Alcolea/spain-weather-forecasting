@@ -238,6 +238,9 @@ def map_figure(df: pd.DataFrame, selected: str | None, t: dict) -> go.Figure:
     fig.update_layout(
         map=dict(style="carto-positron", center=dict(lat=40.0, lon=-3.5), zoom=4.4),
         margin=dict(l=0, r=0, t=0, b=0), height=460,
+        # Sin leyenda de trazas: con 2 capas (borde + color) Plotly la mostraría y
+        # chocaría con la barra de color (colorbar). El mapa se explica solo con la colorbar.
+        showlegend=False,
     )
     return fig
 
