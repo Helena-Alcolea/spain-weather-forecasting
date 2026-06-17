@@ -1,6 +1,6 @@
 # Spain Weather Forecasting
 
-**A deep learning model that forecasts the next 7 days of temperature and rainfall for any weather station in Spain, using AEMET's open public data.**
+**A deep learning model that forecasts the next 7 days of temperature and rainfall for weather stations across Spain, using AEMET's open public data.**
 
 **🌦️ [Live dashboard](https://spain-weather-forecasting.streamlit.app)** — pick a station on the map and see its 7-day forecast.
 
@@ -9,9 +9,9 @@
 
 ## What is this? (in plain words)
 
-Spain's weather agency (AEMET) publishes daily records from hundreds of weather stations. This project uses that **open data** to train a **deep learning model** that predicts, for any station, the **maximum and minimum temperature and the rainfall of the next 7 days** from the last 30 days of observations.
+Spain's weather agency (AEMET) publishes daily records from hundreds of weather stations. This project uses that **open data** to train a **deep learning model** that predicts, for a given station, the **maximum and minimum temperature and the rainfall of the next 7 days** from the last 30 days of observations.
 
-A single model works for the **whole country**: it learns the "fingerprint" of each station's local climate, so the same network forecasts for Madrid, the coast or the mountains.
+A **single model covers stations all over the country**: it learns the "fingerprint" of each station's local climate, so the same network forecasts for Madrid, the coast or the mountains. It is trained on the 137 stations with long enough continuous records (the full network has ~270, but many lack the history or completeness needed to train on).
 
 **Why it matters:** temperature and rainfall forecasts feed real decisions — when to irrigate a crop, how much heating or cooling demand to expect on the grid, how to manage water reserves. Here that whole chain is built end to end at the level of individual stations, from open data and fully reproducible — the kind of data-driven service climate-tech delivers for the energy and agricultural sectors.
 
@@ -53,7 +53,7 @@ The model is measured honestly against two reference methods anyone uses as a sa
 
 This project builds and evaluates ML/DL models to **forecast daily maximum temperature, minimum temperature and precipitation at 1 to 7-day horizons** across Spain's SYNOP meteorological network.
 
-The forecasting task is framed as a multivariate regression problem over meteorological time series. Classical ML approaches (LightGBM and XGBoost) are evaluated at t+1, t+3 and t+7 as reference baselines. The deep learning phase develops a seq2seq (encoder-decoder + attention) architecture with station embedding that predicts all seven daily horizons simultaneously across the SYNOP station network.
+The forecasting task is framed as a multivariate regression problem over meteorological time series. Classical ML approaches (LightGBM and XGBoost) are evaluated at t+1, t+3 and t+7 as reference baselines. The deep learning phase develops a seq2seq (encoder-decoder + attention) architecture with station embedding that predicts all seven daily horizons simultaneously across the 137 SYNOP stations with sufficient continuous history.
 
 ## EDA Highlights
 
