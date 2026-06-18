@@ -174,10 +174,14 @@ def _date_ticks(fechas: pd.Series, t: dict) -> dict:
 
 
 def _transparent(fig: go.Figure) -> go.Figure:
-    """Fondo blanco explícito de la gráfica (independiente del fondo del recuadro)."""
+    """Fondo blanco explícito de la gráfica (independiente del fondo del recuadro).
+
+    `fixedrange=True` desactiva zoom y arrastre en ambos ejes: estas gráficas (líneas y
+    barras) no deben ser interactivas. Solo lo usan temperatura y precipitación, no el mapa.
+    """
     fig.update_layout(paper_bgcolor=BOX_BG, plot_bgcolor=BOX_BG)
-    fig.update_xaxes(gridcolor="rgba(0,0,0,0.06)")
-    fig.update_yaxes(gridcolor="rgba(0,0,0,0.06)")
+    fig.update_xaxes(gridcolor="rgba(0,0,0,0.06)", fixedrange=True)
+    fig.update_yaxes(gridcolor="rgba(0,0,0,0.06)", fixedrange=True)
     return fig
 
 
@@ -371,11 +375,13 @@ with col_temp:
         st.markdown(mean_block_html(fc, t), unsafe_allow_html=True)
     with st.container(border=True, key="card-temp"):
         st.markdown(f'<div class="blocktitle">{t["temp_title"]}</div>', unsafe_allow_html=True)
-        st.plotly_chart(temp_figure(fc, t), width="stretch")
+        st.plotly_chart(temp_figure(fc, t), width="stretch",
+                        config={"displayModeBar": False})
 with col_prec:
     with st.container(border=True, key="card-prec"):
         st.markdown(f'<div class="blocktitle">{t["precip_title"]}</div>', unsafe_allow_html=True)
         st.caption(t["precip_caption"])
-        st.plotly_chart(precip_figure(fc, t), width="stretch")
+        st.plotly_chart(precip_figure(fc, t), width="stretch",
+                        config={"displayModeBar": False})
 
 st.markdown(f'<div class="footer">{t["footer"]}</div>', unsafe_allow_html=True)
