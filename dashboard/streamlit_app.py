@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import math
 import unicodedata
+import urllib.request
 from pathlib import Path
 
 import pandas as pd
@@ -22,6 +23,11 @@ import streamlit as st
 
 HERE = Path(__file__).resolve().parent
 DATA_FILE = HERE / "predictions.json"
+# Las predicciones se actualizan a diario en GitHub (cron del servidor). La app las lee
+# EN CALIENTE desde la URL raw para refrescarse sola sin depender del redespliegue de
+# Streamlit; el fichero empaquetado (DATA_FILE) queda como fallback si GitHub no responde.
+RAW_URL = ("https://raw.githubusercontent.com/Helena-Alcolea/"
+           "spain-weather-forecasting/main/dashboard/predictions.json")
 
 # Paleta cielo / naturaleza (para la barra de título y el mapa).
 SKY_BLUE = "rgb(0, 141, 218)"     # azul cielo intenso
@@ -122,10 +128,15 @@ def inject_style() -> None:
     )
 
 
-@st.cache_data
+@st.cache_data(ttl=1800)  # refresca cada 30 min sin necesidad de redesplegar
 def load_data() -> dict:
-    with open(DATA_FILE, encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with urllib.request.urlopen(RAW_URL, timeout=10) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except Exception:
+        # Si GitHub no responde, usar el JSON empaquetado en el deploy (fallback).
+        with open(DATA_FILE, encoding="utf-8") as f:
+            return json.load(f)
 
 
 def stations_frame(payload: dict) -> pd.DataFrame:
