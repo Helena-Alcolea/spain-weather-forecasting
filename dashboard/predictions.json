@@ -1,5 +1,5 @@
 {
-  "generado": "2026-10-19 06:44:02",
+  "generado": "2026-10-21 06:50:41",
   "modelo": "seq2seq",
   "horizonte_dias": 7,
   "n_estaciones": 79,
