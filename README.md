@@ -4,7 +4,12 @@
 
 **🌦️ [Live dashboard](https://spain-weather-forecasting.streamlit.app)** — pick a station on the map and see its 7-day forecast.
 
-
+> [!NOTE]
+> 📌 **Project status: archived snapshot.** The daily pipeline that refreshed this
+> dashboard has been retired, so the live dashboard now shows a fixed snapshot: the
+> model's forecast for **24–30 October 2026**. What stopped is the data ingestion —
+> the model, its training and its evaluation are unchanged. A second version of the
+> project is in development.
 ---
 
 ## What is this? (in plain words)
@@ -28,14 +33,14 @@ The model is measured honestly against two reference methods anyone uses as a sa
 ## How it works (in brief)
 
 - **Input → output:** 30 days of weather in → 7 days of forecast out (t+1 … t+7), all at once.
-- **A note on dates**: AEMET publishes observations with a few days' lag, so each forecast is anchored to the most recent reliable data (~4 days back). The dashboard therefore shows the 7-day forecast as roughly 3 days that have already happened (a built-in reality check against the actual values) plus 4 genuinely future days. This lag is AEMET's publication schedule, not a limitation of the model. For the same reason, the exact set of stations shown can vary slightly from day to day: a station only appears when its recent 30-day window is complete and reliable — by design, the dashboard skips it rather than feed the model unconsolidated values.
+- **A note on dates**: AEMET publishes observations with a few days' lag, so each forecast is anchored to the most recent reliable data (~4 days back). The dashboard therefore shows the 7-day forecast as roughly 3 days that have already happened (a built-in reality check against the actual values) plus 4 genuinely future days. This lag is AEMET's publication schedule, not a limitation of the model. For the same reason, the exact set of stations shown can vary slightly from day to day: a station only appears when its recent 30-day window is complete and reliable — by design, the dashboard skips it rather than feed the model unconsolidated values. In the archived snapshot, all seven days are in the past.
 - **One global model** with a learned **station embedding** instead of one model per station.
 - **Architecture:** a **seq2seq encoder-decoder with attention** (an LSTM-based sequence model).
 - **Honest evaluation:** rolling-origin out-of-sample testing with **skill scores vs persistence and climatology** (a single test window can be misleading).
 
 📓 Full technical walkthrough in [`notebooks/4-DL_seq2seq_model.ipynb`](notebooks/4-DL_seq2seq_model.ipynb).
 
-**Status:** Complete — data pipeline, EDA, ML baseline and DL model.
+**Status:** Complete, now archived — data pipeline, EDA, ML baseline and DL model.
 
 ---
 
