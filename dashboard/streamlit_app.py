@@ -62,6 +62,11 @@ TR = {
         "past": "Días pasados",
         "future": "Días futuros",
         "footer": "Fuente de datos: AEMET · Dashboard por Helena Alcolea Ruiz",
+        "archived_title": "Dashboard archivado",
+        "archived_body": "La actualización diaria de datos se ha retirado: esta página "
+                         "muestra una foto fija con la previsión del {window}. El modelo "
+                         "y su evaluación no han cambiado. Hay una segunda versión del "
+                         "proyecto en desarrollo.",
         "dow": ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"],
         "mes": ["ene", "feb", "mar", "abr", "may", "jun",
                 "jul", "ago", "sep", "oct", "nov", "dic"],
@@ -84,6 +89,12 @@ TR = {
         "past": "Past days",
         "future": "Future days",
         "footer": "Data source: AEMET · Dashboard by Helena Alcolea Ruiz",
+        "archived_title": "Archived dashboard",
+        "archived_body": "The daily data pipeline has been retired: this page shows a "
+                         "fixed snapshot with the forecast for {window}. The model and "
+                         "its evaluation are unchanged. A second version of the project "
+                         "is in development.",
+        "cap_mes": True,   # en prosa inglesa el mes va con mayúscula ("24–30 Oct")
         "dow": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"],
         "mes": ["jan", "feb", "mar", "apr", "may", "jun",
                 "jul", "aug", "sep", "oct", "nov", "dec"],
@@ -122,6 +133,12 @@ def inject_style() -> None:
           /* El selector va sin borde (solo fondo blanco). */
           div[class*="st-key-card-sel"] {{ border: none !important; box-shadow: none !important; }}
           .footer {{ font-size: 0.78rem; color: #8a96a3; text-align: center; margin-top: 22px; }}
+          /* Aviso de dashboard archivado (ámbar: informa, no alarma). */
+          .archived {{
+              background: #FFF8E1; border: 1px solid #E0B65C; border-left: 5px solid #E0B65C;
+              border-radius: 10px; padding: 12px 16px; margin: -6px 0 18px 0;
+              font-size: 0.92rem; color: #5B4A22; line-height: 1.45;
+          }}
         </style>
         """,
         unsafe_allow_html=True,
@@ -308,6 +325,21 @@ def precip_figure(df: pd.DataFrame, t: dict) -> go.Figure:
     return _transparent(fig)
 
 
+def snapshot_window(payload: dict, t: dict) -> str:
+    """Rango de fechas de la previsión congelada, con el mes en el idioma activo.
+
+    Se lee del propio JSON en vez de fijarlo a mano: si algún día se publica un
+    snapshot distinto, el aviso se actualiza solo.
+    """
+    dias = pd.to_datetime([d["fecha"] for d in payload["estaciones"][0]["dias"]])
+    d1, d2 = dias.min(), dias.max()
+    mes = (lambda n: t["mes"][n - 1].capitalize()) if t.get("cap_mes") else (
+        lambda n: t["mes"][n - 1])
+    if d1.month == d2.month:
+        return f"{d1.day}–{d2.day} {mes(d2.month)} {d2.year}"
+    return f"{d1.day} {mes(d1.month)} – {d2.day} {mes(d2.month)} {d2.year}"
+
+
 def _alpha_key(text: str) -> str:
     """Clave de orden alfabético español: ignora tildes (Á→a) y mayúsculas SOLO
     para comparar, sin alterar el nombre que se muestra. Así 'Águilas' cae en la A."""
@@ -343,6 +375,13 @@ with lang_col:
 t = TR["en"] if lang_choice == "EN" else TR["es"]
 
 st.markdown(f'<div class="titlebar"><h1>{t["title"]}</h1></div>', unsafe_allow_html=True)
+
+# Aviso de archivado: el pipeline diario ya no corre, el JSON es una foto fija.
+st.markdown(
+    f'<div class="archived">📌 <strong>{t["archived_title"]}.</strong> '
+    f'{t["archived_body"].format(window=snapshot_window(payload, t))}</div>',
+    unsafe_allow_html=True,
+)
 
 # --- Bloque 1: selector + mapa (el mapa también filtra al hacer clic) ------
 # Leer el clic del mapa del render anterior (el widget guarda su selección en
